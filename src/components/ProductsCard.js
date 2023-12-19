@@ -1,0 +1,83 @@
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../reduxtoolkit/actions/cartActions';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
+const ProductsCard = (props) => {
+
+    const { title, price,description,category, image,quantity} = props;
+
+    const dispatch = useDispatch();
+
+    return (
+        <>
+ 
+  <div class="col-md-12 col-xl-6">
+    <div class="card shadow-0 border rounded-3">
+   
+      <div class="card-body"  key={props.id}>
+      
+        <div class="row">
+          <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+              <img src={props.image}
+              alt={props.title}
+                class="w-100" />
+              <a href="#!">
+                <div class="hover-overlay">
+                  <div class="mask" ></div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-6">
+            <h5>{props.title}</h5>
+            <div class="d-flex flex-row">
+            <span>{props.rating.rate}-Rate</span>
+              <div class="text-danger mb-1 me-2">
+              <i class="fa-solid fa-star"></i>
+              <FontAwesomeIcon icon="fa-solid fa-star" />
+              <FontAwesomeIcon icon="fa-solid fa-star" />
+              <i class="bi bi-star"></i>
+              </div>
+              <span>{props.rating.count}(Review)</span>
+            </div>
+            
+            <div class="mb-2 text-muted small">
+              {/* <span>Unique design</span> */}
+              <span class="text-primary"> • </span>
+              <span>{props.category}</span>
+              <span class="text-primary"> • </span>
+              {/* <span>Casual<br /></span> */}
+            </div>
+            <p class="text-truncate mb-4 mb-md-0">
+            {props.description}
+            </p>
+           
+          </div>
+          <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+            <div class="d-flex flex-row align-items-center mb-1">
+              <h4 class="mb-1 me-1">${props.price}</h4>
+              {/* <span class="text-danger"><s>${props.quantity}&times;5</s></span> */}
+            </div>
+            <h6 class="text-success">Free shipping</h6>
+            <div class="d-flex flex-column mt-4">
+             <Link  component={Link} to={`/viewproduct/${props.id}`} class="btn btn-primary btn-sm" type="button">Details</Link>
+              <button class="btn btn-outline-primary btn-sm mt-2" type="button" onClick={() => dispatch(addToCart({ ...props }))}>
+                Add to wishlist
+              </button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+        </>
+    );
+};
+
+export default ProductsCard;
